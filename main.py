@@ -43,17 +43,23 @@ class Coffee(QMainWindow):
         if 'Р' in n:
             print(1212)
         else:
-            m = "insert into coffee(название_сорта, степень_обжарки, молотый/в_зернах, описание_вкуса, \
-            цена, объем_упаковки) values({name}, {hot}, {grain}, {taste}, {free}, {volume}"
+            m = f"insert into coffee(название_сорта, степень_обжарки, молотый_в_зернах, описание_вкуса, "
+            p = f"цена, объем_упаковки) values({name}, {hot}, {grain}, {taste}, {free}, {volume})"
             print(m)
-            self.cu.execute(m).fetchall()
+            mp = m + p
+            self.cu.execute(mp).fetchall()
             self.pod.commit()
 
         self.great()
+
+
+def except_hook(cls, exception, traceback):
+    sys.__excepthook__(cls, exception, traceback)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     co = Coffee()
     co.show()
+    sys.excepthook = except_hook
     sys.exit(app.exec())
