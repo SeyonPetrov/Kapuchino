@@ -41,11 +41,26 @@ class Coffee(QMainWindow):
         volume = str(self.spinBox_2.value())
 
         if 'Р' in n:
-            print(1212)
+            m = "update coffee "
+            r = "set "
+            if hot:
+                r = r + f"degree = '{hot}',"
+            if grain:
+                r = r + f" grinding = '{grain}',"
+            if taste:
+                r = r + f" taste = '{taste}',"
+            if free:
+                r = r + f" price = '{free}',"
+            if volume:
+                r = r + f"volume = '{volume}'"
+            p = f" where nameSort = '{name}'"
+            nn = m + r + p
+            self.cu.execute(nn).fetchall()
+            self.pod.commit()
+
         else:
-            m = f"insert into coffee(название_сорта, степень_обжарки, молотый_в_зернах, описание_вкуса, "
-            p = f"цена, объем_упаковки) values({name}, {hot}, {grain}, {taste}, {free}, {volume})"
-            print(m)
+            m = f"insert into coffee(nameSort, degree, grinding, taste, "
+            p = f"price, volume) values('{name}', '{hot}', '{grain}', '{taste}', '{free}', '{volume}')"
             mp = m + p
             self.cu.execute(mp).fetchall()
             self.pod.commit()
